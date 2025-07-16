@@ -1,0 +1,2 @@
+Manzana,Fruta,500
+Pera,Fruta,300

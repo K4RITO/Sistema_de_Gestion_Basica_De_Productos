@@ -3,6 +3,23 @@ indice = 0
 productos = []
 producto = []
 
+with open("base.txt", "r") as base:
+    for linea in base:
+        partes = linea.strip().split(",")
+        if len(partes) == 3:
+            nombre = partes[0]
+            categoria = partes[1]
+            try:
+                precio = int(partes[2])
+            except ValueError:
+                precio = 0
+            productos.append([nombre, categoria, precio])
+
+def actualizar_base():
+    with open("base.txt", "w") as base:
+        for producto in productos:
+            base.write(f"{producto[0]},{producto[1]},{producto[2]}\n")
+
 operacion= int(input("¿que operacion desea realizar? \n 1=Agregar producto:  \n 2=Mostrar productos:  \n 3=Buscar producto:  \n 4=Eliminar producto:  \n 5=Salir: "))
 
 
@@ -15,6 +32,7 @@ while(operacion >= 1 and operacion <= 5):
             producto[1] = producto[1].capitalize()
             producto.append(int(input("ingrese el precio del producto: ")))
             productos.append(producto)
+            actualizar_base()
             
     elif(operacion == 2):
         indice = 0
@@ -47,6 +65,7 @@ while(operacion >= 1 and operacion <= 5):
                 borrar = int(borrar)
                 borrar = borrar - 1
                 del productos[borrar]
+                actualizar_base()
                 break
             else:
                 print("Error: no ingreso un valor correcto.")
